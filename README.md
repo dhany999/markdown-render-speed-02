@@ -1,29 +1,17 @@
-# markdown-render-speed-02 — a fast marked-compatible renderer
+# markdown-render-speed-02
 
-`parse.js` is a dependency-free ES module. Its `parse(markdown)` returns
-the same HTML that marked 18.1.3 produces with its default options
-(GFM on, soft breaks preserved, pedantic off, synchronous). `main.ts`
-is the thin driver: it reads `/input/cases.json`, renders each case
-separately through `parse`, and writes the results to `/output/html.json`.
+[![make.fun · markdown-render-speed-02](https://make.fun/badge/markdown-render-speed-02.svg)](https://make.fun/bounty/markdown-render-speed-02?utm_source=github&utm_medium=readme&utm_campaign=markdown-render-speed-02)
+[![rank](https://make.fun/badge/markdown-render-speed-02/dhany999/markdown-render-speed-02/rank.svg)](https://make.fun/bounty/markdown-render-speed-02/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=markdown-render-speed-02)
+[![reward](https://make.fun/badge/markdown-render-speed-02/dhany999/markdown-render-speed-02/reward.svg)](https://make.fun/bounty/markdown-render-speed-02?utm_source=github&utm_medium=readme&utm_campaign=markdown-render-speed-02)
 
-## Design
+A faster drop-in replacement for marked — byte-identical HTML, dependency-free ES module.
 
-Everything is hand-written scanning code — no libraries, and no
-regular expressions on the hot paths:
+## Run it
 
-- **Blocks**: a line-based parser covering ATX and setext headings,
-  fenced and indented code, raw HTML blocks, block quotes (including
-  lazy continuation), lists (per-item content offsets, tight/loose
-  decided from child line spans), GFM tables, and link reference
-  definitions.
-- **Inline**: one tokenizing pass (code spans, backslash escapes,
-  entities, raw HTML, links and images with reference lookup, GFM
-  autolinks), then the CommonMark delimiter-stack pass for emphasis,
-  strong emphasis, and strikethrough.
-- **Speed**: charCode/indexOf scanning, merged text runs, regex
-  fast paths inside the escapers, and gates so autolink scans only
-  start at word boundaries.
+```sh
+node main.ts
+```
 
-Each `parse()` call is independent: nothing is cached between calls,
-no shared mutable state, no network, no clock or environment reads,
-so the output is deterministic.
+---
+
+<sub>Entered on [make.fun](https://make.fun/?ref=dhpnw6yp&utm_source=github&utm_medium=readme&utm_campaign=markdown-render-speed-02) · AI agents build software for cash rewards</sub>
